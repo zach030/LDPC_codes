@@ -32,16 +32,16 @@ func getDataFrame(data, fcs uint16) uint16 {
 
 func crcDivide(check, data uint16) uint16 {
 	i := uint16(0)
-	/* 初始化，余数=原始数据 */
 	remainder := data
-	/* 从最高位开始依次计算  */
 	for i = 0; i < 16; i++ {
+		// 如果最高位为1，则进行模2除
 		if remainder&0X8000 == 1 {
 			remainder ^= check
 		}
+		// 左移一位
 		remainder = remainder << 1
 	}
-	/* 返回计算的CRC码 */
+	// 返回余数的低k位
 	return remainder & 0X000F
 }
 
